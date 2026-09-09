@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Blog — Konsultan Sadlan, Purwakarta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Epilogue:opsz,wght@8..144,600;8..144,700;8..144,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#1F2A24',
+                        paper: '#F3F1E9',
+                        ledger: '#2F5D50',
+                        ledgerdark: '#20423A',
+                        brass: '#B08628',
+                        slate: '#5B6B63',
+                    },
+                    fontFamily: {
+                        serif: ['"Source Serif 4"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Epilogue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-serif {
+            font-family: 'Source Serif 4', serif;
+        }
+
+        .rule-double {
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+        .rule-double::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+        }
+
+        .rule-double-short::after {
+            width: 48px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        #site-header.is-scrolled {
+            background-color: rgba(243, 241, 233, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(31, 42, 36, 0.1);
+        }
+
+        #site-header.is-scrolled .header-logo-badge {
+            background-color: #1F2A24;
+            color: #F3F1E9;
+        }
+
+        #site-header.is-scrolled .header-logo-sub {
+            color: #1F2A24;
+        }
+
+        #site-header.is-scrolled .header-link {
+            color: #1F2A24;
+        }
+
+        #site-header.is-scrolled .header-cta:hover {
+            background-color: #1F2A24;
+            color: #F3F1E9;
+        }
+
+        /* ===== Mobile bottom navigation ===== */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
+        #mobile-bottom-nav {
+            box-shadow: 0 -8px 24px rgba(31, 42, 36, 0.08);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        .mobile-nav-link {
+            position: relative;
+            color: rgba(31, 42, 36, 0.5);
+        }
+
+        .mobile-nav-link svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .mobile-nav-link span {
+            transition: color 0.25s ease;
+        }
+
+        .mobile-nav-link.is-active {
+            color: #B08628;
+        }
+
+        .mobile-nav-link.is-active svg {
+            transform: translateY(-2px);
+        }
+
+        .mobile-nav-link.is-active::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 9999px;
+            background: #B08628;
+        }
+
+        /* ===== Floating chat ===== */
+        .floating-chat {
+            position: fixed;
+            bottom: 96px;
+            right: 20px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .floating-chat {
+                bottom: 32px;
+                right: 32px;
+            }
+        }
+
+        @supports (bottom: env(safe-area-inset-bottom)) {
+            @media (max-width: 767px) {
+                .floating-chat {
+                    bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 16px);
+                }
+            }
+        }
+
+        .chat-tooltip {
+            background: #1F2A24;
+            color: #F3F1E9;
+            padding: 8px 14px;
+            border-radius: 10px 10px 2px 10px;
+            font-size: 12.5px;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(31, 42, 36, 0.18);
+            opacity: 0;
+            transform: translateX(12px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .floating-chat:hover .chat-tooltip,
+        .floating-chat:focus-within .chat-tooltip {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        .chat-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 9999px;
+            background: #B08628;
+            color: #1F2A24;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(176, 134, 40, 0.4);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chat-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 12px 32px rgba(176, 134, 40, 0.5);
+        }
+
+        .chat-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 9999px;
+            background: #2F5D50;
+            color: #F3F1E9;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #F3F1E9;
+            animation: pulse-badge 2.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .chat-bubble {
+            position: fixed;
+            bottom: 160px;
+            right: 20px;
+            width: min(320px, calc(100vw - 40px));
+            background: #F3F1E9;
+            border-radius: 18px 18px 18px 4px;
+            box-shadow: 0 20px 50px rgba(31, 42, 36, 0.25);
+            border: 1px solid rgba(31, 42, 36, 0.1);
+            z-index: 61;
+            opacity: 0;
+            transform: translateY(16px) scale(0.96);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .chat-bubble {
+                bottom: 96px;
+                right: 32px;
+                width: 320px;
+            }
+        }
+
+        @supports (bottom: env(safe-area-inset-bottom)) {
+            @media (max-width: 767px) {
+                .chat-bubble {
+                    bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 84px);
+                }
+            }
+        }
+
+        .chat-bubble.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+
+        .chat-bubble-header {
+            background: #2F5D50;
+            color: #F3F1E9;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-bubble-header h4 {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-bubble-close {
+            background: rgba(243, 241, 233, 0.15);
+            border: none;
+            color: #F3F1E9;
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .chat-bubble-close:hover {
+            background: rgba(243, 241, 233, 0.28);
+        }
+
+        .chat-bubble-body {
+            padding: 20px 18px;
+            text-align: center;
+        }
+
+        .chat-bubble-body h3 {
+            font-family: 'Source Serif 4', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #1F2A24;
+            margin-bottom: 6px;
+        }
+
+        .chat-bubble-body p {
+            font-size: 13.5px;
+            color: #5B6B63;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .chat-bubble-body .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25D366;
+            color: white;
+            padding: 11px 24px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+        }
+
+        .chat-bubble-body .wa-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+        }
+
+        .chat-bubble-body .wa-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ===== Blog card ===== */
+        .post-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .post-card:hover .post-card-img {
+            transform: scale(1.04);
+        }
+
+        .post-card-img {
+            transition: transform 0.5s ease;
+        }
+
+        /* ===== Category filter ===== */
+        .cat-pill {
+            border: 1px solid rgba(31, 42, 36, 0.15);
+            color: #5B6B63;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cat-pill.is-active,
+        .cat-pill:hover {
+            background: #1F2A24;
+            border-color: #1F2A24;
+            color: #F3F1E9;
+        }
+    </style>
+</head>
+
+<body class="bg-paper text-ink antialiased">
+
+    <!-- ================= HEADER ================= -->
+    <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-transparent transition-colors duration-300">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-3">
+                <span
+                    class="header-logo-badge w-10 h-10 rounded-lg bg-paper/90 flex items-center justify-center font-serif font-semibold text-ink text-base transition-colors duration-300">AS</span>
+                <span
+                    class="header-logo-sub font-serif font-semibold text-lg text-paper transition-colors duration-300">Akuntan
+                    Sadlan</span>
+            </a>
+
+            <div class="flex items-center gap-10">
+                <nav class="hidden md:flex items-center gap-8 text-base">
+                    <a href="#beranda"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Beranda</a>
+                    <a href="layanan.html"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Layanan</a>
+                    <a href="tentang.html"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Tentang</a>
+                    <a href="#lokasi"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Kontak</a>
+                    <a href="blog.html"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Blog</a>
+                </nav>
+
+                <a href="https://wa.me/#"
+                    class="header-cta hidden md:inline-flex items-center justify-center text-base font-bold px-5 py-2.5 rounded-full bg-brass text-ink shadow-lg hover:bg-paper transition-colors duration-300">
+                    Konsultasi
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO / BREADCRUMB ================= -->
+    <section class="relative text-paper pt-32 pb-16 md:pt-40 md:pb-20">
+        <div class="absolute inset-0">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yg2yXzEMyoFr08V0/jasa-akuntansi-kja-slider-1-82V0cyUqpM4XtQW8.jpg"
+                alt="Jasa akuntansi Konsultan Sadlan" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/70 to-ink/30"></div>
+        </div>
+        <div class="relative max-w-[1680px] mx-auto px-6 lg:px-8">
+            <p class="text-paper/60 text-sm">
+                <a href="index.html#beranda" class="hover:text-brass transition-colors">Beranda</a>
+                <span class="mx-2">/</span>
+                <span class="text-brass">Blog</span>
+            </p>
+            <h1 class="font-display text-4xl md:text-5xl font-semibold mt-5 max-w-2xl">
+                Blog Konsultan Sadlan
+            </h1>
+            <p class="mt-5 max-w-xl text-paper/80 text-lg leading-relaxed">
+                Catatan seputar pembukuan, perpajakan, dan pengelolaan keuangan untuk pelaku usaha di Purwakarta dan
+                Pekalongan.
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= FILTER KATEGORI ================= -->
+    <section class="reveal max-w-[1680px] mx-auto px-6 lg:px-8 pt-14">
+        <div class="flex flex-wrap gap-3">
+            <button class="cat-pill is-active px-4 py-2 rounded-full text-sm font-medium">Semua</button>
+            <button class="cat-pill px-4 py-2 rounded-full text-sm font-medium">Perpajakan</button>
+            <button class="cat-pill px-4 py-2 rounded-full text-sm font-medium">Pembukuan</button>
+            <button class="cat-pill px-4 py-2 rounded-full text-sm font-medium">Manajemen Keuangan</button>
+            <button class="cat-pill px-4 py-2 rounded-full text-sm font-medium">Regulasi</button>
+        </div>
+    </section>
+
+    <!-- ================= ARTIKEL UNGGULAN ================= -->
+    <section class="reveal max-w-[1680px] mx-auto px-6 lg:px-8 pt-12 pb-4">
+        <a href="blog-detail.html" class="post-card group grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="overflow-hidden rounded-xl">
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=960&h=640"
+                    alt="Artikel unggulan" class="post-card-img w-full h-[280px] md:h-[380px] object-cover" />
+            </div>
+            <div>
+                <p class="text-brass text-sm font-medium">Perpajakan</p>
+                <h2
+                    class="mt-3 font-serif text-2xl md:text-3xl font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel unggulan — misalnya perubahan tarif pajak UMKM terbaru]
+                </h2>
+                <p class="mt-4 text-slate leading-relaxed text-[15px]">
+                    [Tulis ringkasan singkat artikel di sini — dua sampai tiga kalimat yang menjelaskan inti
+                    pembahasan dan kenapa relevan untuk pelaku usaha di Purwakarta dan Pekalongan.]
+                </p>
+                <p class="mt-5 text-sm text-slate/70">1 September 2026 · 5 menit baca</p>
+            </div>
+        </a>
+    </section>
+
+    <!-- ================= DAFTAR ARTIKEL ================= -->
+    <section class="reveal max-w-[1680px] mx-auto px-6 lg:px-8 py-16 md:py-20">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+
+            <a href="blog-detail.html" class="post-card group block">
+                <div class="overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=640&h=440"
+                        alt="Artikel blog" class="post-card-img w-full h-[220px] object-cover" />
+                </div>
+                <p class="mt-5 text-brass text-sm font-medium">Pembukuan</p>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel — misalnya cara merapikan pembukuan usaha kecil]
+                </h3>
+                <p class="mt-3 text-slate leading-relaxed text-[14px]">
+                    [Ringkasan singkat artikel, satu hingga dua kalimat.]
+                </p>
+                <p class="mt-4 text-sm text-slate/70">28 Agustus 2026 · 4 menit baca</p>
+            </a>
+
+            <a href="blog-detail.html" class="post-card group block">
+                <div class="overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=640&h=440"
+                        alt="Artikel blog" class="post-card-img w-full h-[220px] object-cover" />
+                </div>
+                <p class="mt-5 text-brass text-sm font-medium">Manajemen Keuangan</p>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel — misalnya menyusun arus kas sederhana untuk usaha rumahan]
+                </h3>
+                <p class="mt-3 text-slate leading-relaxed text-[14px]">
+                    [Ringkasan singkat artikel, satu hingga dua kalimat.]
+                </p>
+                <p class="mt-4 text-sm text-slate/70">20 Agustus 2026 · 6 menit baca</p>
+            </a>
+
+            <a href="blog-detail.html" class="post-card group block">
+                <div class="overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=640&h=440"
+                        alt="Artikel blog" class="post-card-img w-full h-[220px] object-cover" />
+                </div>
+                <p class="mt-5 text-brass text-sm font-medium">Regulasi</p>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel — misalnya ketentuan baru pelaporan SPT tahunan]
+                </h3>
+                <p class="mt-3 text-slate leading-relaxed text-[14px]">
+                    [Ringkasan singkat artikel, satu hingga dua kalimat.]
+                </p>
+                <p class="mt-4 text-sm text-slate/70">12 Agustus 2026 · 3 menit baca</p>
+            </a>
+
+            <a href="blog-detail.html" class="post-card group block">
+                <div class="overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=640&h=440"
+                        alt="Artikel blog" class="post-card-img w-full h-[220px] object-cover" />
+                </div>
+                <p class="mt-5 text-brass text-sm font-medium">Perpajakan</p>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel — misalnya perbedaan PPh final dan PPh normal bagi UMKM]
+                </h3>
+                <p class="mt-3 text-slate leading-relaxed text-[14px]">
+                    [Ringkasan singkat artikel, satu hingga dua kalimat.]
+                </p>
+                <p class="mt-4 text-sm text-slate/70">5 Agustus 2026 · 5 menit baca</p>
+            </a>
+
+            <a href="blog-detail.html" class="post-card group block">
+                <div class="overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=640&h=440"
+                        alt="Artikel blog" class="post-card-img w-full h-[220px] object-cover" />
+                </div>
+                <p class="mt-5 text-brass text-sm font-medium">Pembukuan</p>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel — misalnya memilih software akuntansi yang tepat untuk usaha kecil]
+                </h3>
+                <p class="mt-3 text-slate leading-relaxed text-[14px]">
+                    [Ringkasan singkat artikel, satu hingga dua kalimat.]
+                </p>
+                <p class="mt-4 text-sm text-slate/70">29 Juli 2026 · 4 menit baca</p>
+            </a>
+
+            <a href="blog-detail.html" class="post-card group block">
+                <div class="overflow-hidden rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=640&h=440"
+                        alt="Artikel blog" class="post-card-img w-full h-[220px] object-cover" />
+                </div>
+                <p class="mt-5 text-brass text-sm font-medium">Manajemen Keuangan</p>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-ink group-hover:text-ledger transition-colors">
+                    [Judul artikel — misalnya kapan usaha kecil perlu naik kelas jadi badan usaha]
+                </h3>
+                <p class="mt-3 text-slate leading-relaxed text-[14px]">
+                    [Ringkasan singkat artikel, satu hingga dua kalimat.]
+                </p>
+                <p class="mt-4 text-sm text-slate/70">15 Juli 2026 · 7 menit baca</p>
+            </a>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-16 flex items-center justify-center gap-2">
+            <button
+                class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-slate hover:bg-ink hover:text-paper hover:border-ink transition-colors"
+                aria-label="Halaman sebelumnya">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+            </button>
+            <button class="w-9 h-9 rounded-full bg-ink text-paper text-sm font-medium">1</button>
+            <button
+                class="w-9 h-9 rounded-full text-slate text-sm font-medium hover:bg-ink/5 transition-colors">2</button>
+            <button
+                class="w-9 h-9 rounded-full text-slate text-sm font-medium hover:bg-ink/5 transition-colors">3</button>
+            <button
+                class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-slate hover:bg-ink hover:text-paper hover:border-ink transition-colors"
+                aria-label="Halaman berikutnya">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="reveal relative">
+        <div class="absolute inset-0">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yg2yXzEMyoFr08V0/alun-alun-Purwakarta-opacity-m5KnM2LrPkhRvG5g.png"
+                alt="Alun-alun Purwakarta" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-ink/85"></div>
+        </div>
+        <div class="relative max-w-[1680px] mx-auto px-6 lg:px-8 py-20 md:py-28 text-paper text-center">
+            <h2 class="font-serif text-3xl md:text-4xl font-semibold max-w-2xl mx-auto">
+                Ada pertanyaan seputar pembukuan atau pajak usaha Anda?
+            </h2>
+            <p class="mt-5 max-w-lg mx-auto text-paper/80 text-[15px] leading-relaxed">
+                Jadwalkan konsultasi awal dengan tim kami untuk membahas kebutuhan spesifik usaha Anda.
+            </p>
+            <a href="https://wa.me/#"
+                class="inline-block mt-8 px-7 py-3.5 bg-brass text-ink font-medium hover:bg-paper transition-colors">
+                Hubungi Kami
+            </a>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-ink text-paper/80">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8 py-16 grid md:grid-cols-4 gap-12">
+
+            <div>
+                <h4 class="font-serif text-lg font-semibold text-paper">KJA Agung Nugraha</h4>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Jasa akuntansi profesional untuk kebutuhan bisnis Anda.
+                </p>
+                <div class="mt-5 flex gap-4 text-sm">
+                    <a href="https://www.facebook.com/" class="hover:text-brass transition-colors">Facebook</a>
+                    <a href="https://www.instagram.com/" class="hover:text-brass transition-colors">Instagram</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-paper tracking-wide">Layanan</h4>
+                <ul class="mt-4 space-y-2.5 text-sm">
+                    <li><a href="layanan.html" class="hover:text-brass transition-colors">Jasa Pembukuan</a></li>
+                    <li><a href="layanan.html" class="hover:text-brass transition-colors">Jasa Perpajakan</a></li>
+                    <li><a href="layanan.html" class="hover:text-brass transition-colors">Akuntansi Manajemen</a>
+                    </li>
+                    <li><a href="layanan.html" class="hover:text-brass transition-colors">Konsultasi
+                            Manajemen</a></li>
+                    <li><a href="layanan.html" class="hover:text-brass transition-colors">Jasa Sistem Teknologi
+                            Informasi</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-paper tracking-wide">Alamat</h4>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Perum Griya Pasekaran 2 Blok H 81<br />
+                    Kota Purwakarta, Jawa Barat
+                </p>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Agung Setya Nugraha, S.Ak., M.Ak., AK., CA<br />
+                    +62 856-4100-0058
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-paper tracking-wide">Hubungi Kami</h4>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Dapatkan info layanan terbaru langsung ke email Anda.
+                </p>
+                <form class="mt-4 flex" onsubmit="return false;">
+                    <input type="email" placeholder="Alamat email Anda"
+                        class="w-full bg-transparent border border-paper/30 px-3 py-2.5 text-sm placeholder:text-paper/40 focus:outline-none focus:border-brass" />
+                    <button class="px-4 py-2.5 bg-brass text-ink text-sm font-medium">Kirim</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="border-t border-paper/10">
+            <div class="max-w-[1680px] mx-auto px-6 lg:px-8 py-6 text-xs text-paper/50">
+                © 2026 Konsultan Sadlan. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
+    <nav id="mobile-bottom-nav" class="md:hidden fixed inset-x-0 bottom-0 z-50 bg-paper border-t border-ink/10">
+        <div class="grid grid-cols-4 h-[68px]">
+            <a href="index.html" data-section="#beranda"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 10.5 12 3l9 7.5" />
+                    <path d="M5 9.5V21h14V9.5" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Beranda</span>
+            </a>
+
+            <a href="layanan.html" data-section="#layanan"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M8 9h8M8 13h8M8 17h5" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Layanan</span>
+            </a>
+
+            <a href="tentang.html" data-section="#tentang"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 8h.01M11 12h1v5h1" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Tentang</span>
+            </a>
+
+            <a href="blog.html" data-section="#blog"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 4h13l3 3v13H4z" />
+                    <path d="M8 9h9M8 13h9M8 17h5" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Blog</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ================= FLOATING CHAT ================= -->
+    <div class="floating-chat" id="floatingChat">
+        <div class="chat-tooltip">Hubungi kami via WhatsApp</div>
+        <button class="chat-btn" id="chatToggle" aria-label="Buka chat WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+                <path
+                    d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.5-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z" />
+            </svg>
+            <span class="chat-badge">1</span>
+        </button>
+    </div>
+
+    <!-- ================= CHAT BUBBLE ================= -->
+    <div class="chat-bubble" id="chatBubble">
+        <div class="chat-bubble-header">
+            <h4>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z" />
+                </svg>
+                Konsultan Sadlan
+            </h4>
+            <button class="chat-bubble-close" id="chatClose" aria-label="Tutup">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+            </button>
+        </div>
+        <div class="chat-bubble-body">
+            <h3>Ada yang bisa kami bantu?</h3>
+            <p>Tim kami siap membantu kebutuhan akuntansi dan perpajakan Anda. Klik tombol di bawah untuk konsultasi
+                langsung via WhatsApp.</p>
+            <a href="https://wa.me/#?text=Halo%20KJA%20Agung%20Setya%20Nugraha%2C%20saya%20ingin%20bertanya%20lebih%20lanjut"
+                target="_blank" class="wa-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+                    <path
+                        d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.5-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z" />
+                </svg>
+                Hubungi via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+        revealEls.forEach((el) => observer.observe(el));
+
+        // Header: transparent over the dark hero, solid once scrolled
+        const siteHeader = document.getElementById('site-header');
+        function updateHeaderState() {
+            if (window.scrollY > 40) {
+                siteHeader.classList.add('is-scrolled');
+            } else {
+                siteHeader.classList.remove('is-scrolled');
+            }
+        }
+        updateHeaderState();
+        window.addEventListener('scroll', updateHeaderState, { passive: true });
+
+        // Category filter (visual only, placeholder)
+        const catPills = document.querySelectorAll('.cat-pill');
+        catPills.forEach((pill) => {
+            pill.addEventListener('click', () => {
+                catPills.forEach((p) => p.classList.remove('is-active'));
+                pill.classList.add('is-active');
+            });
+        });
+
+        // Floating chat toggle
+        const chatToggle = document.getElementById('chatToggle');
+        const chatBubble = document.getElementById('chatBubble');
+        const chatClose = document.getElementById('chatClose');
+
+        function toggleChat() {
+            chatBubble.classList.toggle('open');
+        }
+        chatToggle.addEventListener('click', toggleChat);
+        chatClose.addEventListener('click', toggleChat);
+        document.addEventListener('click', (e) => {
+            const isChat = e.target.closest('.floating-chat') || e.target.closest('.chat-bubble');
+            if (!isChat && chatBubble.classList.contains('open')) {
+                chatBubble.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+
+</html>

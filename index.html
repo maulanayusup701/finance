@@ -1,0 +1,1571 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Akuntant Sadlan — Jasa Akuntan Purwakarta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Epilogue:opsz,wght@8..144,600;8..144,700;8..144,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#1F2A24',
+                        paper: '#F3F1E9',
+                        ledger: '#2F5D50',
+                        ledgerdark: '#20423A',
+                        brass: '#B08628',
+                        slate: '#5B6B63',
+                    },
+                    fontFamily: {
+                        serif: ['"Source Serif 4"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Epilogue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-serif {
+            font-family: 'Source Serif 4', serif;
+        }
+
+        .rule-double {
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+        .rule-double::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+        }
+
+        .rule-double-short::after {
+            width: 48px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        .testimonial-swiper .swiper-pagination-bullet {
+            background-color: #1F2A24;
+            opacity: 0.2;
+            width: 8px;
+            height: 8px;
+            transition: background-color 0.3s ease, width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .testimonial-swiper .swiper-pagination-bullet-active {
+            background-color: #B08628;
+            opacity: 1;
+            width: 20px;
+            border-radius: 9999px;
+        }
+
+        .feature-swiper .swiper-pagination-bullet {
+            background-color: #1F2A24;
+            opacity: 0.2;
+            width: 8px;
+            height: 8px;
+            transition: background-color 0.3s ease, width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .feature-swiper .swiper-pagination-bullet-active {
+            background-color: #B08628;
+            opacity: 1;
+            width: 20px;
+            border-radius: 9999px;
+        }
+
+        #site-header.is-scrolled {
+            background-color: rgba(243, 241, 233, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(31, 42, 36, 0.1);
+        }
+
+        #site-header.is-scrolled .header-logo-badge {
+            background-color: #1F2A24;
+            color: #F3F1E9;
+        }
+
+        #site-header.is-scrolled .header-logo-sub {
+            color: #1F2A24;
+        }
+
+        #site-header.is-scrolled .header-link {
+            color: #1F2A24;
+        }
+
+        #site-header.is-scrolled .header-cta:hover {
+            background-color: #1F2A24;
+            color: #F3F1E9;
+        }
+
+        /* ===== Mobile bottom navigation (4 menu, tanpa chat) ===== */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
+        #mobile-bottom-nav {
+            box-shadow: 0 -8px 24px rgba(31, 42, 36, 0.08);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        .mobile-nav-link {
+            position: relative;
+            color: rgba(31, 42, 36, 0.5);
+        }
+
+        .mobile-nav-link svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .mobile-nav-link span {
+            transition: color 0.25s ease;
+        }
+
+        .mobile-nav-link.is-active {
+            color: #B08628;
+        }
+
+        .mobile-nav-link.is-active svg {
+            transform: translateY(-2px);
+        }
+
+        .mobile-nav-link.is-active::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 9999px;
+            background: #B08628;
+        }
+
+        /* ===== Floating chat (terpisah dari bottom nav) ===== */
+        .floating-chat {
+            position: fixed;
+            bottom: 96px;
+            right: 20px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .floating-chat {
+                bottom: 32px;
+                right: 32px;
+            }
+        }
+
+        @supports (bottom: env(safe-area-inset-bottom)) {
+            @media (max-width: 767px) {
+                .floating-chat {
+                    bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 16px);
+                }
+            }
+        }
+
+        .chat-tooltip {
+            background: #1F2A24;
+            color: #F3F1E9;
+            padding: 8px 14px;
+            border-radius: 10px 10px 2px 10px;
+            font-size: 12.5px;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(31, 42, 36, 0.18);
+            opacity: 0;
+            transform: translateX(12px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .floating-chat:hover .chat-tooltip,
+        .floating-chat:focus-within .chat-tooltip {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        .chat-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 9999px;
+            background: #B08628;
+            color: #1F2A24;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(176, 134, 40, 0.4);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chat-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 12px 32px rgba(176, 134, 40, 0.5);
+        }
+
+        .chat-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 9999px;
+            background: #2F5D50;
+            color: #F3F1E9;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #F3F1E9;
+            animation: pulse-badge 2.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .chat-bubble {
+            position: fixed;
+            bottom: 160px;
+            right: 20px;
+            width: min(320px, calc(100vw - 40px));
+            background: #F3F1E9;
+            border-radius: 18px 18px 18px 4px;
+            box-shadow: 0 20px 50px rgba(31, 42, 36, 0.25);
+            border: 1px solid rgba(31, 42, 36, 0.1);
+            z-index: 61;
+            opacity: 0;
+            transform: translateY(16px) scale(0.96);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .chat-bubble {
+                bottom: 96px;
+                right: 32px;
+                width: 320px;
+            }
+        }
+
+        @supports (bottom: env(safe-area-inset-bottom)) {
+            @media (max-width: 767px) {
+                .chat-bubble {
+                    bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 84px);
+                }
+            }
+        }
+
+        .chat-bubble.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+
+        .chat-bubble-header {
+            background: #2F5D50;
+            color: #F3F1E9;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-bubble-header h4 {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-bubble-close {
+            background: rgba(243, 241, 233, 0.15);
+            border: none;
+            color: #F3F1E9;
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .chat-bubble-close:hover {
+            background: rgba(243, 241, 233, 0.28);
+        }
+
+        .chat-bubble-body {
+            padding: 20px 18px;
+            text-align: center;
+        }
+
+        .chat-bubble-body h3 {
+            font-family: 'Source Serif 4', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #1F2A24;
+            margin-bottom: 6px;
+        }
+
+        .chat-bubble-body p {
+            font-size: 13.5px;
+            color: #5B6B63;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .chat-bubble-body .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25D366;
+            color: white;
+            padding: 11px 24px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+        }
+
+        .chat-bubble-body .wa-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+        }
+
+        .chat-bubble-body .wa-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ===== Klien & Mitra (marquee) ===== */
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes scroll-right {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .marquee-track {
+            width: max-content;
+        }
+
+        .animate-scroll-left {
+            animation: scroll-left 32s linear infinite;
+        }
+
+        .animate-scroll-right {
+            animation: scroll-right 32s linear infinite;
+        }
+
+        .partner-card {
+            flex-shrink: 0;
+            width: 220px;
+            margin: 0 12px;
+            background: #F3F1E9;
+            border: 1px solid rgba(31, 42, 36, 0.1);
+            border-radius: 0.75rem;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 12px;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .partner-card:hover {
+            box-shadow: 0 12px 28px rgba(31, 42, 36, 0.12);
+            border-color: rgba(176, 134, 40, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .partner-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px;
+            background: rgba(176, 134, 40, 0.12);
+            color: #B08628;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== Map (lokasi) ===== */
+        .map-full {
+            position: relative;
+            display: block;
+            border-radius: 1rem;
+            overflow: hidden;
+            text-decoration: none;
+            box-shadow: 0 20px 50px rgba(31, 42, 36, 0.22);
+        }
+
+        .map-full iframe {
+            pointer-events: none;
+            filter: grayscale(0.35) sepia(0.12) contrast(1.02);
+            transition: filter 0.4s ease, transform 0.6s ease;
+        }
+
+        .map-full:hover iframe {
+            filter: grayscale(0) sepia(0);
+            transform: scale(1.03);
+        }
+
+        .map-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(31, 42, 36, 0.6) 0%, rgba(31, 42, 36, 0.1) 35%, rgba(31, 42, 36, 0) 60%);
+            pointer-events: none;
+        }
+
+        @media (min-width: 1024px) {
+            .map-visual::after {
+                background: linear-gradient(90deg, rgba(31, 42, 36, 0.68) 0%, rgba(31, 42, 36, 0.18) 38%, rgba(31, 42, 36, 0) 60%);
+            }
+        }
+
+        .map-pin-drop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .map-pin-drop .pin-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50% 50% 50% 0;
+            background: #B08628;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(176, 134, 40, 0.45);
+            animation: pin-drop-bounce 2.4s ease-in-out infinite;
+        }
+
+        .map-pin-drop .pin-circle svg {
+            transform: rotate(45deg);
+            color: #1F2A24;
+        }
+
+        .map-pin-drop .pin-shadow {
+            width: 18px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(31, 42, 36, 0.35);
+            margin-top: 6px;
+            filter: blur(1px);
+        }
+
+        @keyframes pin-drop-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-45deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        .map-info-float {
+            position: static;
+            z-index: 3;
+            background: #F3F1E9;
+            border-radius: 0 0 1rem 1rem;
+            padding: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            .map-info-float {
+                position: absolute;
+                left: 24px;
+                right: auto;
+                bottom: 24px;
+                width: 320px;
+                border-radius: 0.75rem;
+                box-shadow: 0 16px 40px rgba(31, 42, 36, 0.22);
+            }
+        }
+
+        .map-info-float .map-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: #B08628;
+            color: #1F2A24;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 999px;
+            transition: all 0.2s ease;
+        }
+
+        .map-info-float .map-cta:hover {
+            background: #1F2A24;
+            color: #F3F1E9;
+            transform: translateY(-1px);
+        }
+
+        .map-badge-live {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(243, 241, 233, 0.95);
+            color: #1F2A24;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 999px;
+            box-shadow: 0 4px 16px rgba(31, 42, 36, 0.15);
+        }
+
+        .map-side-card {
+            background: #F3F1E9;
+            border-radius: 1rem;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(31, 42, 36, 0.22);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .map-pin-static {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            background: #B08628;
+            color: #1F2A24;
+        }
+
+        .map-badge-live .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2F5D50;
+            box-shadow: 0 0 0 0 rgba(47, 93, 80, 0.6);
+            animation: dot-ping 1.8s ease-out infinite;
+        }
+
+        @keyframes dot-ping {
+            0% {
+                box-shadow: 0 0 0 0 rgba(47, 93, 80, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(47, 93, 80, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(47, 93, 80, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-paper text-ink antialiased">
+
+    <!-- ================= HEADER ================= -->
+    <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-transparent transition-colors duration-300">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-3">
+                <span
+                    class="header-logo-badge w-10 h-10 rounded-lg bg-paper/90 flex items-center justify-center font-serif font-semibold text-ink text-base transition-colors duration-300">AS</span>
+                <span
+                    class="header-logo-sub font-serif font-semibold text-lg text-paper transition-colors duration-300">Akuntan
+                    Sadlan</span>
+            </a>
+
+            <div class="flex items-center gap-10">
+                <nav class="hidden md:flex items-center gap-8 text-base">
+                    <a href="#beranda"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Beranda</a>
+                    <a href="layanan.html"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Layanan</a>
+                    <a href="tentang.html"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Tentang</a>
+                    <a href="#lokasi"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Kontak</a>
+                    <a href="blog.html"
+                        class="header-link font-semibold text-paper/90 pb-1 border-b border-transparent hover:border-current transition-colors duration-300">Blog</a>
+                </nav>
+
+                <a href="https://wa.me/#"
+                    class="header-cta hidden md:inline-flex items-center justify-center text-base font-bold px-5 py-2.5 rounded-full bg-brass text-ink shadow-lg hover:bg-paper transition-colors duration-300">
+                    Konsultasi
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <section id="beranda" class="relative">
+        <div class="absolute inset-0">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yg2yXzEMyoFr08V0/jasa-akuntansi-kja-slider-1-82V0cyUqpM4XtQW8.jpg"
+                alt="Jasa akuntansi Akuntant Sadlan" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/70 to-ink/30"></div>
+        </div>
+
+        <div class="relative max-w-[1680px] mx-auto px-6 lg:px-8 pt-24 pb-32 md:pt-36 md:pb-44">
+            <div class="max-w-xl">
+                <p class="text-brass text-sm tracking-wide mb-4">Kota Purwakarta, Jawa Barat</p>
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-paper leading-tight tracking-tight">
+                    Jasa Akuntansi di Kota Purwakarta
+                </h1>
+                <p class="mt-5 text-paper/85 text-lg leading-relaxed">
+                    Kami menyediakan berbagai layanan akuntansi untuk kebutuhan bisnis Anda, dikerjakan oleh tenaga
+                    profesional dan berpengalaman.
+                </p>
+                <a href="https://wa.me/#"
+                    class="inline-block mt-8 px-7 py-3.5 bg-brass text-ink font-medium hover:bg-paper transition-colors">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FEATURE STRIP ================= -->
+    <section class="reveal border-b border-ink/10">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8 py-8 md:py-0">
+
+            <!-- Mobile/Tablet: Swiper Carousel -->
+            <div class="md:hidden swiper feature-swiper">
+                <div class="swiper-wrapper py-1">
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <span class="text-ledger text-2xl">01</span>
+                            <p class="mt-3 text-[15px] leading-relaxed">Pembukuan dan laporan keuangan yang akurat</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <span class="text-ledger text-2xl">02</span>
+                            <p class="mt-3 text-[15px] leading-relaxed">Konsultasi manajemen untuk pengambilan keputusan
+                                yang tepat</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <span class="text-ledger text-2xl">03</span>
+                            <p class="mt-3 text-[15px] leading-relaxed">Pendampingan laporan keuangan sesuai regulasi
+                                terbaru</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination mt-6 !relative"></div>
+            </div>
+
+            <!-- Desktop: Grid -->
+            <div class="hidden md:grid md:grid-cols-3 divide-x divide-ink/10">
+                <div class="py-10 md:px-8 first:pl-0">
+                    <span class="text-ledger text-2xl">01</span>
+                    <p class="mt-3 text-[15px] leading-relaxed">Pembukuan dan laporan keuangan yang akurat</p>
+                </div>
+                <div class="py-10 md:px-8">
+                    <span class="text-ledger text-2xl">02</span>
+                    <p class="mt-3 text-[15px] leading-relaxed">Konsultasi manajemen untuk pengambilan keputusan yang
+                        tepat</p>
+                </div>
+                <div class="py-10 md:px-8">
+                    <span class="text-ledger text-2xl">03</span>
+                    <p class="mt-3 text-[15px] leading-relaxed">Pendampingan laporan keuangan sesuai regulasi terbaru
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= TENTANG ================= -->
+    <section id="tentang" class="reveal max-w-[1680px] mx-auto px-6 lg:px-8 py-20 md:py-28">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            <div class="order-1 md:order-1">
+                <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=690,fit=crop/Yg2yXzEMyoFr08V0/jasa-pendampingan-laporan-YanJ0DMZJphO7aVj.jpg"
+                    alt="Layanan jasa akuntan di Purwakarta"
+                    class="w-full h-[300px] md:h-[480px] object-cover rounded-xl" />
+            </div>
+            <div class="order-2 md:order-2">
+                <h2
+                    class="font-serif text-3xl md:text-4xl font-semibold rule-double rule-double-short inline-block text-ink">
+                    Tentang Kami
+                </h2>
+                <p class="mt-8 text-slate leading-relaxed text-[15px]">
+                    Kami adalah kantor jasa akuntan di Purwakarrta menawarkan berbagai layanan akuntansi, termasuk
+                    pembukuan, laporan keuangan, manajemen, dan konsultasi perpajakan.
+                </p>
+
+                <blockquote class="mt-10 border-l-2 border-brass pl-6">
+                    <p class="font-serif text-xl text-ink leading-snug">
+                        "Layanan jasa akuntan yang sangat profesional dan."
+                    </p>
+                    <cite class="not-italic block mt-3 text-sm text-slate">Sadlan</cite>
+                </blockquote>
+
+                <a href="tentang.html"
+                    class="inline-block mt-10 text-sm text-ledger border-b border-ledger pb-0.5 hover:text-brass hover:border-brass transition-colors">
+                    Baca Selengkapnya
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= LAYANAN ================= -->
+    <section id="layanan" class="reveal bg-ledgerdark text-paper py-20 md:py-28">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8">
+            <div class="max-w-xl">
+                <h2 class="font-serif text-3xl md:text-4xl font-semibold rule-double rule-double-short inline-block">
+                    Jasa Akuntansi
+                </h2>
+                <p class="mt-8 text-paper/75 leading-relaxed text-[15px]">
+                    Kami menyediakan beragam jasa akuntansi untuk mendukung kebutuhan bisnis Anda dengan
+                    profesionalisme.
+                </p>
+            </div>
+
+            <div class="mt-14 grid md:grid-cols-3 gap-px bg-paper/10">
+                <article class="bg-ledgerdark p-8">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=584,fit=crop/Yg2yXzEMyoFr08V0/jasa-manajemen-kja-agung-setya-nugraha-YX4xjwkajztP25v0.jpg"
+                        alt="Jasa Pembukuan di Purwakarta" class="w-full h-52 object-cover rounded-xl" />
+                    <h3 class="font-serif text-xl font-semibold mt-6">Jasa Pembukuan</h3>
+                    <p class="mt-3 text-paper/70 text-[15px] leading-relaxed">
+                        Layanan pembukuan akurat untuk memudahkan laporan keuangan dan pengelolaan keuangan bisnis.
+                    </p>
+                </article>
+
+                <article class="bg-ledgerdark p-8">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=584,fit=crop/Yg2yXzEMyoFr08V0/jasa-perpajakan-kja-agung-setya-nugraha-mjEG4kMk1NUPW8K1.jpg"
+                        alt="Jasa Perpajakan di Purwakarta" class="w-full h-52 object-cover rounded-xl" />
+                    <h3 class="font-serif text-xl font-semibold mt-6">Jasa Perpajakan</h3>
+                    <p class="mt-3 text-paper/70 text-[15px] leading-relaxed">
+                        Layanan yang membantu klien dalam pemenuhan kewajiban perpajakan sesuai peraturan
+                        perundang-undangan.
+                    </p>
+                </article>
+
+                <article class="bg-ledgerdark p-8">
+                    <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=584,fit=crop/Yg2yXzEMyoFr08V0/konsultasi-manajemen-kja-agung-setya-nugraha-AVLaxG4B29Sxwl2B.jpg"
+                        alt="Konsultasi Manajemen di Purwakarta" class="w-full h-52 object-cover rounded-xl" />
+                    <h3 class="font-serif text-xl font-semibold mt-6">Konsultasi Manajemen</h3>
+                    <p class="mt-3 text-paper/70 text-[15px] leading-relaxed">
+                        Bantuan konsultasi manajemen untuk pengambilan keputusan yang lebih baik dan strategi bisnis
+                        efektif.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ULASAN ================= -->
+    <section class="reveal max-w-[1680px] mx-auto px-6 lg:px-8 py-20 md:py-28">
+        <h2 class="font-serif text-3xl md:text-4xl font-semibold rule-double rule-double-short inline-block">
+            Ulasan Pelanggan
+        </h2>
+        <p class="mt-8 max-w-xl text-slate text-[15px] leading-relaxed">
+            Temukan apa yang klien kami pikirkan tentang layanan Konsultan Sadlan.
+        </p>
+
+        <div class="mt-14">
+            <div class="swiper testimonial-swiper">
+                <div class="swiper-wrapper py-2">
+
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <div class="flex items-start gap-4">
+                                <img src="https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=96&h=96"
+                                    alt="Slamet Wibowo" class="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                                <div>
+                                    <p class="font-serif font-semibold text-ink">Slamet Wibowo</p>
+                                    <p class="text-brass tracking-widest text-xs mt-0.5">★★★★★</p>
+                                </div>
+                            </div>
+                            <p class="mt-5 text-slate text-[15px] leading-relaxed">
+                                Saya sangat puas dengan layanan disini. Kualitas dan kinerjanya melebihi ekspektasi
+                                saya, dan sangat saya rekomendasikan kepada semua orang.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <div class="flex items-start gap-4">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=96&h=96"
+                                    alt="Budi Santoso" class="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                                <div>
+                                    <p class="font-serif font-semibold text-ink">Budi Santoso</p>
+                                    <p class="text-brass tracking-widest text-xs mt-0.5">★★★★★</p>
+                                </div>
+                            </div>
+                            <p class="mt-5 text-slate text-[15px] leading-relaxed">
+                                Layanan akuntansi dari Akuntan Sadlan sangat profesional dan membantu kami
+                                dalam pengelolaan keuangan. Sangat direkomendasikan untuk bisnis Anda.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <div class="flex items-start gap-4">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=96&h=96"
+                                    alt="Rina Kartika" class="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                                <div>
+                                    <p class="font-serif font-semibold text-ink">Rina Kartika</p>
+                                    <p class="text-brass tracking-widest text-xs mt-0.5">★★★★★</p>
+                                </div>
+                            </div>
+                            <p class="mt-5 text-slate text-[15px] leading-relaxed">
+                                Tim Akuntan Sadlan membantu merapikan pembukuan usaha kami dari nol. Prosesnya jelas dan
+                                selalu adam penjelasan di setiap laporan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="h-full bg-white border border-ink/10 rounded-xl p-7">
+                            <div class="flex items-start gap-4">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=96&h=96"
+                                    alt="Hendra Wijaya" class="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                                <div>
+                                    <p class="font-serif font-semibold text-ink">Hendra Wijaya</p>
+                                    <p class="text-brass tracking-widest text-xs mt-0.5">★★★★★</p>
+                                </div>
+                            </div>
+                            <p class="mt-5 text-slate text-[15px] leading-relaxed">
+                                Konsultasi perpajakannya membantu bisnis kami tetap patuh regulasi tanpa harus pusing
+                                mengurusnya sendiri.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination mt-8 !relative"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= KLIEN & MITRA ================= -->
+    <section class="reveal py-20 md:py-28 bg-white border-y border-ink/10">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-brass text-ink rounded-lg flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8.5 8.5 4 13l4.5 4.5M15.5 8.5 20 13l-4.5 4.5M13.5 4.5l-3 15" />
+                        </svg>
+                    </div>
+                    <h2 class="font-serif text-2xl md:text-3xl font-semibold text-ink">
+                        Klien Kami
+                    </h2>
+                </div>
+                <p class="text-slate text-[15px]">Konsultan | Dipercaya oleh berbagai usaha di Purwakarta
+                    dan sekitarnya</p>
+            </div>
+
+            <div class="space-y-6 overflow-hidden">
+                <div class="marquee-container overflow-hidden relative">
+                    <div class="marquee-track flex animate-scroll-left hover:[animation-play-state:paused]">
+                        <div class="marquee-set flex">
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">CV Mitra Sejahtera</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 3v18h18M7 15l4-4 3 3 5-6" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Koperasi Warga Makmur</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="7" width="18" height="13" rx="2" />
+                                        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Cipta Boga Nusantara</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 21V9l8-6 8 6v12M9 21v-7h6v7" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Toko Bangunan Jaya Abadi</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="M12 7v5l3 3" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">UD Sumber Rezeki</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 12h4l3 8 4-16 3 8h6" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Agro Lestari</p>
+                            </div>
+                        </div>
+                        <div class="marquee-set flex" aria-hidden="true">
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">CV Mitra Sejahtera</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 3v18h18M7 15l4-4 3 3 5-6" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Koperasi Warga Makmur</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="7" width="18" height="13" rx="2" />
+                                        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Cipta Boga Nusantara</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 21V9l8-6 8 6v12M9 21v-7h6v7" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Toko Bangunan Jaya Abadi</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="M12 7v5l3 3" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">UD Sumber Rezeki</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 12h4l3 8 4-16 3 8h6" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Agro Lestari</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-container overflow-hidden relative">
+                    <div class="marquee-track flex animate-scroll-right hover:[animation-play-state:paused]">
+                        <div class="marquee-set flex">
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">CV Karya Utama</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path d="M4 12h3m10 0h3M12 4v3m0 10v3" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Koperasi Simpan Pinjam
+                                    Sejahtera</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18M6 21V10l6-6 6 6v11M10 21v-5h4v5" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Purwakarta Bersinar</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                                        <path d="M9 9h6v6H9z" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Toko Elektronik Makmur</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2C8 6 6 9 6 13a6 6 0 0 0 12 0c0-4-2-7-6-11Z" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">UD Tani Jaya</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4h16v4H4zM4 12h10v8H4zM17 12h3v8h-3z" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Solusi Digital Nusantara</p>
+                            </div>
+                        </div>
+                        <div class="marquee-set flex" aria-hidden="true">
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">CV Karya Utama</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path d="M4 12h3m10 0h3M12 4v3m0 10v3" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Koperasi Simpan Pinjam
+                                    Sejahtera</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18M6 21V10l6-6 6 6v11M10 21v-5h4v5" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Purwakarta Bersinar</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                                        <path d="M9 9h6v6H9z" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">Toko Elektronik Makmur</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2C8 6 6 9 6 13a6 6 0 0 0 12 0c0-4-2-7-6-11Z" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">UD Tani Jaya</p>
+                            </div>
+                            <div class="partner-card">
+                                <span class="partner-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4h16v4H4zM4 12h10v8H4zM17 12h3v8h-3z" />
+                                    </svg>
+                                </span>
+                                <p class="font-serif font-semibold text-ink text-sm">PT Solusi Digital Nusantara</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center mt-10 text-xs text-slate">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="inline-block -mt-0.5 mr-1">
+                    <path d="M12 3v4M5 8l3 3M19 8l-3 3M4 21h16" />
+                </svg>
+                Hover untuk pause
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= LOKASI ================= -->
+    <section id="lokasi" class="reveal relative">
+        <div class="absolute inset-0">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yg2yXzEMyoFr08V0/alun-alun-Purwakarta-opacity-m5KnM2LrPkhRvG5g.png"
+                alt="Alun-alun Purwakarta" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-ink/85"></div>
+        </div>
+
+        <div class="relative max-w-[1680px] mx-auto px-6 lg:px-8 py-20 md:py-28 text-paper">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+                <!-- Kolom kiri: Judul, deskripsi, Alamat & Jam Operasional -->
+                <div>
+                    <h2
+                        class="font-serif text-3xl md:text-4xl font-semibold rule-double rule-double-short inline-block">
+                        Lokasi Kami
+                    </h2>
+                    <p class="mt-8 max-w-lg text-paper/80 text-[15px] leading-relaxed">
+                        Kantor kami terletak di Kota Purwakarta, siap memberikan layanan akuntansi profesional untuk
+                        kebutuhan bisnis Anda. Klik peta untuk membuka rute di Google Maps.
+                    </p>
+
+                    <div class="mt-12 grid sm:grid-cols-2 gap-10">
+                        <div>
+                            <h3 class="font-serif text-lg font-semibold text-brass">Alamat</h3>
+                            <p class="mt-3 text-paper/85 text-[15px] leading-relaxed">
+                                Perum Griya Pasekaran 2 Blok H 81, Kota Purwakarta, Purwakarta
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-lg font-semibold text-brass">Jam Operasional</h3>
+                            <p class="mt-3 text-paper/85 text-[15px] leading-relaxed">
+                                Senin – Jumat, 09.00 – 16.00 WIB
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom kanan: Peta -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Perum+Griya+Pasekaran+2+Blok+H+81+Purwakarta+Jawa+Tengah"
+                    target="_blank" rel="noopener" class="map-full block h-full"
+                    aria-label="Buka lokasi Akuntant Sadlan di Google Maps">
+                    <div class="map-visual relative h-full">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Perum+Griya+Pasekaran+2+Blok+H+81+Purwakarta+Jawa+Tengah&z=16&output=embed"
+                            class="w-full h-full min-h-[320px] aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto"
+                            style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Lokasi Akuntant Sadlan di Google Maps"></iframe>
+
+                        <span class="map-badge-live">
+                            <span class="dot"></span> Lokasi Aktif
+                        </span>
+
+                        <span class="map-pin-drop">
+                            <span class="pin-circle">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z" />
+                                    <circle cx="12" cy="10" r="2.5" />
+                                </svg>
+                            </span>
+                            <span class="pin-shadow"></span>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-ink text-paper/80">
+        <div class="max-w-[1680px] mx-auto px-6 lg:px-8 py-16 grid md:grid-cols-4 gap-12">
+
+            <div>
+                <h4 class="font-serif text-lg font-semibold text-paper">Konsultan Sadlan</h4>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Jasa akuntansi profesional untuk kebutuhan bisnis Anda.
+                </p>
+                <div class="mt-5 flex gap-4 text-sm">
+                    <a href="https://www.facebook.com/" class="hover:text-brass transition-colors">Facebook</a>
+                    <a href="https://www.instagram.com/" class="hover:text-brass transition-colors">Instagram</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-paper tracking-wide">Layanan</h4>
+                <ul class="mt-4 space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-brass transition-colors">Jasa Pembukuan</a></li>
+                    <li><a href="#" class="hover:text-brass transition-colors">Jasa Perpajakan</a></li>
+                    <li><a href="#" class="hover:text-brass transition-colors">Akuntansi Manajemen</a></li>
+                    <li><a href="#" class="hover:text-brass transition-colors">Konsultasi Manajemen</a></li>
+                    <li><a href="#" class="hover:text-brass transition-colors">Jasa Sistem Teknologi Informasi</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-paper tracking-wide">Alamat</h4>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Perum Griya Pasekaran 2 Blok H 81<br />
+                    Kota Purwakarta, Purwakarta
+                </p>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Agung Setya Nugraha, S.Ak., M.Ak., AK., CA<br />
+                    +62 856-4100-0058
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-paper tracking-wide">Hubungi Kami</h4>
+                <p class="mt-4 text-sm leading-relaxed">
+                    Dapatkan info layanan terbaru langsung ke email Anda.
+                </p>
+                <form class="mt-4 flex" onsubmit="return false;">
+                    <input type="email" placeholder="Alamat email Anda"
+                        class="w-full bg-transparent border border-paper/30 px-3 py-2.5 text-sm placeholder:text-paper/40 focus:outline-none focus:border-brass" />
+                    <button class="px-4 py-2.5 bg-brass text-ink text-sm font-medium">Kirim</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="border-t border-paper/10">
+            <div class="max-w-[1680px] mx-auto px-6 lg:px-8 py-6 text-xs text-paper/50">
+                © 2026 Akuntant Sadlan. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MOBILE BOTTOM NAVIGATION (4 menu) ================= -->
+    <nav id="mobile-bottom-nav" class="md:hidden fixed inset-x-0 bottom-0 z-50 bg-paper border-t border-ink/10">
+        <div class="grid grid-cols-4 h-[68px]">
+            <a href="index.html" data-section="#beranda"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 10.5 12 3l9 7.5" />
+                    <path d="M5 9.5V21h14V9.5" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Beranda</span>
+            </a>
+
+            <a href="layanan.html" data-section="#layanan"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M8 9h8M8 13h8M8 17h5" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Layanan</span>
+            </a>
+
+            <a href="tentang.html" data-section="#tentang"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 8h.01M11 12h1v5h1" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Tentang</span>
+            </a>
+
+            <a href="blog.html" data-section="#blog"
+                class="mobile-nav-link flex flex-col items-center justify-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 4h13l3 3v13H4z" />
+                    <path d="M8 9h9M8 13h9M8 17h5" />
+                </svg>
+                <span class="text-[10.5px] font-medium">Blog</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ================= FLOATING CHAT (terpisah dari bottom nav) ================= -->
+    <div class="floating-chat" id="floatingChat">
+        <div class="chat-tooltip">Hubungi kami via WhatsApp</div>
+        <button class="chat-btn" id="chatToggle" aria-label="Buka chat WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+                <path
+                    d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.5-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z" />
+            </svg>
+            <span class="chat-badge">1</span>
+        </button>
+    </div>
+
+    <!-- ================= CHAT BUBBLE ================= -->
+    <div class="chat-bubble" id="chatBubble">
+        <div class="chat-bubble-header">
+            <h4>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z" />
+                </svg>
+                Akuntant Sadlan
+            </h4>
+            <button class="chat-bubble-close" id="chatClose" aria-label="Tutup">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+            </button>
+        </div>
+        <div class="chat-bubble-body">
+            <h3>Ada yang bisa kami bantu?</h3>
+            <p>Tim kami siap membantu kebutuhan akuntansi dan perpajakan Anda. Klik tombol di bawah untuk konsultasi
+                langsung via WhatsApp.</p>
+            <a href="https://wa.me/#?text=Halo%20KJA%20Agung%20Setya%20Nugraha%2C%20saya%20ingin%20konsultasi"
+                target="_blank" class="wa-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+                    <path
+                        d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.5-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z" />
+                </svg>
+                Hubungi via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+        revealEls.forEach((el) => observer.observe(el));
+
+        // Header: transparent at top, solid once scrolled
+        const siteHeader = document.getElementById('site-header');
+        function updateHeaderState() {
+            if (window.scrollY > 40) {
+                siteHeader.classList.add('is-scrolled');
+            } else {
+                siteHeader.classList.remove('is-scrolled');
+            }
+        }
+        updateHeaderState();
+        window.addEventListener('scroll', updateHeaderState, { passive: true });
+
+        // Nav underline (desktop) + active state (mobile bottom nav) follow the section in view
+        const navLinks = document.querySelectorAll('.header-link');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link[data-section]');
+        const trackedIds = new Set();
+        navLinks.forEach((link) => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) trackedIds.add(href);
+        });
+        mobileNavLinks.forEach((link) => trackedIds.add(link.getAttribute('data-section')));
+        const navSections = Array.from(trackedIds)
+            .map((id) => document.querySelector(id))
+            .filter(Boolean);
+
+        function setActiveNavLink() {
+            let activeId = null;
+            navSections.forEach((sec) => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= 120 && rect.bottom > 120) {
+                    activeId = '#' + sec.id;
+                }
+            });
+
+            navLinks.forEach((link) => {
+                if (link.getAttribute('href') === activeId) {
+                    link.classList.remove('border-transparent');
+                    link.classList.add('border-current');
+                } else {
+                    link.classList.remove('border-current');
+                    link.classList.add('border-transparent');
+                }
+            });
+
+            mobileNavLinks.forEach((link) => {
+                link.classList.toggle('is-active', link.getAttribute('data-section') === activeId);
+            });
+        }
+        setActiveNavLink();
+        window.addEventListener('scroll', setActiveNavLink, { passive: true });
+
+        // Floating chat toggle
+        const chatToggle = document.getElementById('chatToggle');
+        const chatBubble = document.getElementById('chatBubble');
+        const chatClose = document.getElementById('chatClose');
+
+        function toggleChat() {
+            chatBubble.classList.toggle('open');
+        }
+        chatToggle.addEventListener('click', toggleChat);
+        chatClose.addEventListener('click', toggleChat);
+        document.addEventListener('click', (e) => {
+            const isChat = e.target.closest('.floating-chat') || e.target.closest('.chat-bubble');
+            if (!isChat && chatBubble.classList.contains('open')) {
+                chatBubble.classList.remove('open');
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        new Swiper('.feature-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            spaceBetween: 16,
+            slidesPerView: 1.1,
+            pagination: {
+                el: '.feature-swiper .swiper-pagination',
+                clickable: true,
+            },
+            speed: 500,
+        });
+
+        new Swiper('.testimonial-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            spaceBetween: 24,
+            slidesPerView: 1.1,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            speed: 600,
+            breakpoints: {
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+            },
+        });
+    </script>
+</body>
+
+</html>
